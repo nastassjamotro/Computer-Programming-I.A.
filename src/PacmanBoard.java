@@ -123,6 +123,7 @@ public class PacmanBoard extends JPanel implements ActionListener {
   }
   
   // initiating game as a whole with starting game variables
+
   public void initGame() {
     score = 0;
     currentSpeed = 3;
@@ -158,15 +159,44 @@ public class PacmanBoard extends JPanel implements ActionListener {
         }
         element = speeds[random];
       }
-      pacmanX = BLOCKS * 7;
-      pacmanY = BLOCKS * 11;
-      pacmandX = 0;
-      pacmandY = 0;
-      recdX = 0;
-      recdY = 0;
-      viewdX = -1;
-      viewdY = 0;
-      dead = false;
+    }
+    pacmanX = BLOCKS * 7;
+    pacmanY = BLOCKS * 11;
+    pacmandX = 0;
+    pacmandY = 0;
+    recdX = 0;
+    recdY = 0;
+    viewdX = -1;
+    viewdY = 0;
+    dead = false;
+  }
+  
+  // loading all the images using ImageIcon
+  private void loadImages() {
+    ghost = new ImageIcon("images/ghost.png").getImage();
+    pacman = new ImageIcon("images/ghost.png").getImage();
+    pacmanUp = new ImageIcon("images/ghost.png").getImage();
+    pacmanDown = new ImageIcon("images/ghost.png").getImage();
+    pacmanRight = new ImageIcon("images/ghost.png").getImage();
+    pacmanLeft = new ImageIcon("images/ghost.png").getImage();
+    pacman2Up = new ImageIcon("images/ghost.png").getImage();
+    pacman2Down = new ImageIcon("images/ghost.png").getImage();
+    pacman2Right = new ImageIcon("images/ghost.png").getImage();
+    pacman2Left = new ImageIcon("images/ghost.png").getImage();
+    pacman3Up = new ImageIcon("images/ghost.png").getImage();
+    pacman3Down = new ImageIcon("images/ghost.png").getImage();
+    pacman3Right = new ImageIcon("images/ghost.png").getImage();
+    pacman3Left = new ImageIcon("images/ghost.png").getImage();
+  }
+  
+  private void play(Graphics2D g2D) {
+    if (dead) {
+      death();
+    } else {
+      check();
+      ghostMovement();
+      pacMovement();
+      drawPac();
     }
   }
 }
