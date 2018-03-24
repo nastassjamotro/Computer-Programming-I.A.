@@ -83,4 +83,42 @@ public class PacmanBoard extends JPanel implements ActionListener {
     1, 25, 24, 24, 24, 24, 24, 24, 24, 24, 16, 16, 16, 18, 20,
     9, 8, 8, 8, 8, 8, 8, 8, 8, 8, 25, 24, 24, 24, 28
   };
+  
+  private short[] sData;
+  private Timer timer;
+  
+  public PacmanBoard() {
+    loadImages();
+    initBoard();
+    initVar();
+  }
+  
+  // initializing the board setup
+  public void initBoard() {
+    addKeyListener(new TAdapter());
+    setBackground(Color.BLACK);
+    setFocusable(true); // lets component (jpanel) gain power of getting focused
+    setDoubleBuffered(true); // double buffer creates an image off screen then displays it all at once
+  }
+  
+  // initiates variables in the game
+  public void initVar() {
+    dim = new Dimension(500, 500);
+    maze = new Color(13, 255, 71);
+    ghostX = new int[GHOST_MAX];
+    ghostY = new int[GHOST_MAX];
+    ghostdX = new int[GHOST_MAX];
+    ghostdY = new int[GHOST_MAX];
+    dx = new int[4];
+    dy = new int[4];
+    sData = new short[NUMBER_OF_BLOCKS * NUMBER_OF_BLOCKS];
+    timer = new Timer(40, this);
+    timer.start();
+  }
+  
+  @Override
+  public void addNotification() {
+    super.addNotification();
+    initGame();
+  }
 }
