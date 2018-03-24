@@ -121,4 +121,52 @@ public class PacmanBoard extends JPanel implements ActionListener {
     super.addNotification();
     initGame();
   }
+  
+  // initiating game as a whole with starting game variables
+  public void initGame() {
+    score = 0;
+    currentSpeed = 3;
+    GHOST_NUMBER = 6;
+    pacsLeft = 3;
+    initLevel();
+  }
+  
+  // initializing each level
+  public void initLevel() {
+    for(int element : level) {
+      for(int i = 0; i < NUMBER_OF_BLOCKS * NUMBER_OF_BLOCKS; i++) {
+        sData[i] = element;
+      }
+    }
+    contLevel();
+  }
+  
+  // continuing the level after initializing
+  public void contLevel() {
+    int dx = 1;
+    int random;
+    for(int element : ghostSpeed) {
+      for(short i = 0; i < GHOST_NUMBER; i++) {
+        ghostX[i] = BLOCKS * 4;
+        ghostY[i] = BLOCKS * 4;
+        ghostdX[i] = dx;
+        ghostdY[i] = 0;
+        dx = -dx;
+        random = (int) (Math.random() * (currentSpeed + 1));
+        if(random > currentSpeed) {
+          random = currentSpeed;
+        }
+        element = speeds[random];
+      }
+      pacmanX = BLOCKS * 7;
+      pacmanY = BLOCKS * 11;
+      pacmandX = 0;
+      pacmandY = 0;
+      recdX = 0;
+      recdY = 0;
+      viewdX = -1;
+      viewdY = 0;
+      dead = false;
+    }
+  }
 }
