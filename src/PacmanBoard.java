@@ -103,7 +103,7 @@ public class PacmanBoard extends JPanel implements ActionListener {
   
   // initiates variables in the game
   public void initVar() {
-    dim = new Dimension(500, 500);
+    dim = new Dimension(400, 400);
     maze = new Color(13, 255, 71);
     ghostX = new int[GHOST_MAX];
     ghostY = new int[GHOST_MAX];
@@ -198,5 +198,31 @@ public class PacmanBoard extends JPanel implements ActionListener {
       pacMovement();
       drawPac();
     }
+  }
+  
+  /* there's an introduction screen that pops up before the player is able to play the game
+     it prompts the user to press the 's' key in order to start the game in which it then proceeds to the actual game screen
+  */
+  private void introScreen(Graphics2D g2D) {
+    g2D.setColor(new Color(23, 46, 255));
+    g2D.fillRect(50, SCREEN / 2 - 20, SCREEN - 100, 50);
+    g2D.setColor(Color.WHITE);
+    g2D.drawRect(50, SCREEN / 2 - 20, SCREEN - 100, 50);
+    String s = "Press s to start.";
+    Font smallF = new Font("Serif", Font.BOLD, 16);
+    FontMetrics met = this.getFontMetrics(smallF);
+    g2D.setColor(Color.WHITE);
+    g2D.setFont(smallF);
+    g2D.drawString(s, (SCREEN - met.stringWidth(s)) / 2, SCREEN / 2);
+  }
+  
+  // this draws up a game score at the bottom right hand corner of the screen
+  private void gameScore(Graphics2D g) {
+    String s;
+    g.setFont(font);
+    g.setColor(new Color(255, 25, 42));
+    s = "Score: " + score;
+    g.drawString(s, SCREEN / 2 + 96, SCREEN + 16);
+    for (int i = 0; i  pacsLeft
   }
 }
