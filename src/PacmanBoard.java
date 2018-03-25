@@ -494,4 +494,25 @@ public class PacmanBoard extends JPanel implements ActionListener {
       }
     }
   }
+  @Override
+  public void paintComponent(Graphics g) {
+    super.paintComponent(g);
+    doTheDraw(g);
+  }
+  private void doTheDraw(Graphics g) {
+    Graphics2D g2D = (Graphics2D) g;
+    g2D.setColor(Color.BLACK);
+    g2D.fillRect(0, 0, dim.width, dim.height);
+    drawMaze(g2D);
+    gameScore(g2D);
+    animation();
+    if(inGame) {
+      play(g2D);
+    } else {
+      introScreen(g2D);
+    }
+    g2D.drawImage(image, 5, 5, this);
+    Toolkit.getDefaultToolkit().sync();
+    g2D.dispose();
+  }
 }
