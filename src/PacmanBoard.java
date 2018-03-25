@@ -447,4 +447,41 @@ public class PacmanBoard extends JPanel implements ActionListener {
         break;
     }
   }
+  // complex and painful movement for pacman. i don't know if this even works
+  // recdX and recdY can be found within the adapter class
+  private void pacMovement() {
+    short i;
+    int position;
+    if(recdX == -pacmandX && recdY == - pacmandY) {
+      pacmandX = recdX;
+      pacmandY = recdY;
+      viewdX = pacmandX;
+      viewdY = pacmandY;
+    }
+    if(pacmandX % BLOCKS == 0 && pacmandY % BLOCKS == 0) { // again sees if pacman has moved a square
+      position = pacmanX / BLOCKS + NUMBER_OF_BLOCKS * (int) (pacmanY / BLOCKS); // determines pacman's position
+      i = sData[position];
+      // this basically means that once pacman moves to a position with a point (dot on maze) then we remove that point and increase the score
+      if((i & 16) != 0) {
+        sData[position] = (short) (i & 15);
+        score++;
+      }
+      if(recdX != 0 || recdY != 0) {
+        if(!((recdX == -1 && recdY == 0 && (i & 1) != 0) || (recdX == 1 && recdY == 0 && (i & 4) != 0)
+             || (recdX == 0 && recdY == -1 && (i & 2) != 0) || (recdX == 0 && recdY == 1 && (i & 8) != 0) {
+           pacmandX = recdX;
+           pacmandY = recdY;
+           viewdX = pacmandX;
+           viewdY = pacmandY;
+         }
+      }
+      if((pacmandX == -1 && pacmandY == 0 && (i & 1) != 0) || (pacmandX == 1 && pacmandY == 0) && (i & 4) != 0)
+             || (pacmandX == 0 && pacmandY == -1 && (i & 2) != 0) || (pacmandX == 0 && pacmandY == 1 && (i & 8) != 0) {
+         pacmandX = 0;
+         pacmandY = 0;
+      }
+    }
+    pacmanX = pacmanX + PACMAN_SPEED * pacmandX;
+    pacmanY = pacmanY + PACMAN_SPEED * pacmandY;
+  }
 }
