@@ -183,6 +183,7 @@ public class PacmanBoard extends JPanel implements ActionListener {
     pacman2Down = new ImageIcon("images/ghost.png").getImage();
     pacman2Right = new ImageIcon("images/ghost.png").getImage();
     pacman2Left = new ImageIcon("images/ghost.png").getImage();
+
     pacman3Up = new ImageIcon("images/ghost.png").getImage();
     pacman3Down = new ImageIcon("images/ghost.png").getImage();
     pacman3Right = new ImageIcon("images/ghost.png").getImage();
@@ -235,5 +236,67 @@ public class PacmanBoard extends JPanel implements ActionListener {
     }
     contLevel();
   }
+  
+  /*
+  this method checks to see if the maze that drawn is actually finished so basically if it's done drawing then
+  it initializes the game and proceeds with the rest of the code. Otherwise it continues to draw the maze until it's done
+  */
+  private void check() {
+    boolean done = true;
+    while (short i < NUMBER_OF_BLOCKS * NUMBER_OF_BLOCKS && done) {
+      if(sData[i] & 48) != 0) {
+        done = false;
+      }
+      i++;
+    }
+    if(done) {
+      score += 50;
+      if(GHOST_NUMBER < GHOST_MAX) {
+        GHOST_NUMBER++;
+      }
+      if(currentSpeed < maxSpeed) {
+        currentSpeed ++;
+      }
+      initLevel();
+    }
+  }
+  
+  /* draws the maze. the different if statements represent the different numbers that can be seen
+  in the array of level[]. The numbers provide information on what is a corner or not in the game.
+  the numbers used are 0, 1, 2, 4, 8, and 16. 0 represents a space or nothing in the maze, 1 is a
+  left corner, 2 is a top corner, 4 is a right corner, 8 is a bottom corner and 16 represents a point
+  */
+  private void drawMaze(Graphics2D g2D) {
+    short z = 0;
+    for(int y = 0; y < SCREEN; y += BLOCKS) {
+      for(int x = 0; x < SCREEN; x += BLOCKS) {
+        g2D.setStroke(new BasicStroke(1));
+        g2D.setColor(mColor);
+        // left corner
+        if((sData[z] & 1) != 0) {
+          g2D.drawLine(x, y, x, y + BLOCKS - 1);
+        }
+        // top corner
+        if((sData[z] & 2) != 0) {
+          g2D.drawLine(x, y, x + BLOCKS - 1, y);
+        }
+        // right corner
+        if((sData[z] & 4) != 0) {
+          g2D.drawLine(x + BLOCKS - 1, y, x + BLOCKS - 1, y + BLOCKS - 1);
+        }
+        // bottom corner
+        if((sData[z] & 8) != 0) {
+          g2D.drawLine(x, y + BLOCKS - 1, x + BLOCKS - 1, y + BLOCKS - 1);
+        }
+        // point and also the dots that pacman collects around the screen
+        if((sData[z] & 16) != 0) {
+          g2D.setColor(dots);
+          g2D.fillRect(x + 11, y + 11, 2, 2);
+        }
+        i++;
+      }
+    }
+  }
+  
   
 }
