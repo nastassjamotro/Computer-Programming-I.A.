@@ -123,7 +123,6 @@ public class PacmanBoard extends JPanel implements ActionListener {
   }
   
   // initiating game as a whole with starting game variables
-
   public void initGame() {
     score = 0;
     currentSpeed = 3;
@@ -172,6 +171,7 @@ public class PacmanBoard extends JPanel implements ActionListener {
   }
   
   // loading all the images using ImageIcon
+  // there's three different pacmans because you have three lives
   private void loadImages() {
     ghost = new ImageIcon("ghost.gif").getImage();
     pacman = new ImageIcon("pacman.gif").getImage();
@@ -228,6 +228,7 @@ public class PacmanBoard extends JPanel implements ActionListener {
     }
   }
   
+  // it's in the name, you get hit by a ghost and you "die". three deaths and that's the end of the game
   private void death() {
     pacsLeft --;
     if(pacsLeft == 0) {
@@ -340,7 +341,9 @@ public class PacmanBoard extends JPanel implements ActionListener {
           dy[number] = 1;
           number++;
         }
+        // if there's nothing there
         if (number == 0) {
+          // meaning that there was a point but after pacman "picked it up" and it's no longer there, becoming an empty space
           if((sData[position] & 15) == 15) {
             ghostdX[i] = 0;
             ghostdY[i] = 0;
@@ -360,12 +363,13 @@ public class PacmanBoard extends JPanel implements ActionListener {
       ghostX[i] = ghostX[i] + (ghostdX[i] * ghostSpeed[i]);
       ghostY[i] = ghostY[i] + (ghostdY[i] * ghostSpeeed[i]);
       drawGhost(g2D, ghostX[i] + 1, ghostY[i] + 1);
-      // collision detection
+      // collision detection for pacman and the ghosts
       if (pacmanX > (ghostX[i] - 12 && pacmanX < (ghostX[i] + 12) && pacmanY > (ghostY[i] - 12) && pacmanY < (ghostY[i] + 12) && inGame) {
         dead = true;
       }
     }
   }
+          
   // this is the main or general method that draws pacman
   private void drawPac(Graphics2D g2D) {
     if(viewdY == -1) {
@@ -378,6 +382,7 @@ public class PacmanBoard extends JPanel implements ActionListener {
       drawLeft(g2D);
     }
   }
+          
   // draws pacman facing up and it moves up
   private void drawUp(Graphics2D g2D) {
     switch (pacmanPosition) {
@@ -395,6 +400,7 @@ public class PacmanBoard extends JPanel implements ActionListener {
         break;
     }
   }
+          
   // draws pacman facing down
   private void drawDown(Graphics2D g2D) {
     switch (pacmanPosition) {
@@ -412,6 +418,7 @@ public class PacmanBoard extends JPanel implements ActionListener {
         break;
     }
   }
+          
   // draws pacman facing right
   private void drawRight(Graphics2D g2D) {
     switch (pacmanPosition) {
@@ -429,6 +436,7 @@ public class PacmanBoard extends JPanel implements ActionListener {
         break;
     }
   }
+          
   // draws pacman facing left
   private void drawLeft(Graphics2D g2D) {
     switch (pacmanPosition) {
@@ -446,6 +454,7 @@ public class PacmanBoard extends JPanel implements ActionListener {
         break;
     }
   }
+          
   // complex and painful movement for pacman. i don't know if this even works
   // recdX and recdY can be found within the adapter class
   private void pacMovement() {
@@ -483,7 +492,9 @@ public class PacmanBoard extends JPanel implements ActionListener {
     pacmanX = pacmanX + PACMAN_SPEED * pacmandX;
     pacmanY = pacmanY + PACMAN_SPEED * pacmandY;
   }
+             
   // animiation crap for pacman opening and closing his mouth
+  // the delay is there so pacman doesn't open and close his mouth insanely fast that you can barely if at all see him doing that
   private void animation() {
     pacmanCount --;
     if(pacmanCount <= 0) {
@@ -494,11 +505,14 @@ public class PacmanBoard extends JPanel implements ActionListener {
       }
     }
   }
+             
   @Override
   public void paintComponent(Graphics g) {
     super.paintComponent(g);
     doTheDraw(g);
   }
+  
+  // finally drawing up or pulling everything up that was created before hand that makes up the main screen of the game (maze, score, etc.)          
   private void doTheDraw(Graphics g) {
     Graphics2D g2D = (Graphics2D) g;
     g2D.setColor(Color.BLACK);
@@ -515,7 +529,9 @@ public class PacmanBoard extends JPanel implements ActionListener {
     Toolkit.getDefaultToolkit().sync();
     g2D.dispose();
   }
-  class TAdapter extends KeyAdapter {
+  
+  // adapters provide empty implementation of another interface           
+  class TAdapter extends KeyAdapter {  
     @Override
     public void keyPressed(KeyEvent e) {
       int k = e.getKeyCode();
@@ -548,6 +564,7 @@ public class PacmanBoard extends JPanel implements ActionListener {
         }
       }
     }
+                  
     @Override
     public void keyReleased(KeyEvent e) {
       int k = e.getKeyCode();
@@ -557,6 +574,7 @@ public class PacmanBoard extends JPanel implements ActionListener {
       }
     }
   }
+                  
   @Override
   public void actionPerformed(ActionEvent e) {
     repaint();
