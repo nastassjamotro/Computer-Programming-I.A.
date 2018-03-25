@@ -515,4 +515,50 @@ public class PacmanBoard extends JPanel implements ActionListener {
     Toolkit.getDefaultToolkit().sync();
     g2D.dispose();
   }
+  class TAdapter extends KeyAdapter {
+    @Override
+    public void keyPressed(KeyEvent e) {
+      int k = e.getKeyCode();
+      if(inGame) {
+        if(k == KeyEvent.VK_UP) {
+          recdX = 0;
+          recdY = -1;
+        } else if(k == KeyEvent.VK_DOWN) {
+          recdX = 0;
+          recdY = 1;
+        } else if(k == KeyEvent.VK_RIGHT) {
+          recdX = -1;
+          recdY = 0;
+        } else if(k == KeyEvent.VK_LEFT
+          recdX = 1;
+          recdY = 0
+        } else if(k == KeyEvent.VK_PAUSE) {
+          if(timer.isRunning()) {
+            timer.stop();
+          } else {
+            timer.start();
+          }
+        } else if(k == KeyEvent.VK_ESCAPE && timer.isRunning()) {
+          inGame = false;
+        }
+      } else {
+        if(k == 'S'|| k == 's') {
+          inGame = true;
+          initGame();
+        }
+      }
+    }
+    @Override
+    public void keyReleased(KeyEvent e) {
+      int k = e.getKeyCode();
+      if(k == Event.UP || k == Event.DOWN || k == Event.RIGHT || k == Event.LEFT) {
+        recdX = 0;
+        recdY = 0;
+      }
+    }
+  }
+  @Override
+  public void actionPerformed(ActionEvent e) {
+    repaint();
+  }
 }
