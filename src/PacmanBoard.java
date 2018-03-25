@@ -298,5 +298,74 @@ public class PacmanBoard extends JPanel implements ActionListener {
     }
   }
   
+  // the easiest line of code you will find throughout this entire thing
+  private void drawGhost(Graphics g2D, int x, int y) {
+    g2D.drawImage(ghost, x, y, this);
+  }
+  
+  /* 
+  my attempt at making somewhat random movement for the ghosts, but it's not really that random i guess
+  basically what's supposed to happen is that the ghost moves one square and then it's supposed to decide
+  if it needs to change direction or not (if it hits a wall)
+  */
+  private void ghostMovement(Graphics g2D) {
+    int number;
+    int position;
+    short i;
+    // since I'm not that good with enhanced for loops and there's a lot in this loop, i decided to keep it normal
+    for (i = 0; i < GHOST_NUMBER; i++) {
+      if (ghostX[i] % BLOCKS == 0 && ghostY[i] % BLOCKS == 0) { // this just checks if the ghost has moved yet, and if they have it'll then decide what to do
+        position = ghostX[i] / BLOCKS + NUMBER_OF_BLOCKS * (int) (ghostY[i] / BLOCKS); // this figures out the location of the ghost
+        count = 0;
+        // if there's nothing on the left and the ghost isn't moving right, then it'll move left
+        if((sData[position] & 1) == 0 && ghostX[i] != 1) {
+          dx[number] = -1;
+          dy[number] = 0;
+          number++;
+        }
+        // if there's nothing on the right and the ghost isn't moving left, then it'll move right
+        if((sData[position] & 4) == 0 && ghostX[i] != -1) {
+          dx[number] = 1;
+          dy[number] = 0;
+          number++;
+        }
+        // if there's nothing towards the top and the ghost isn't moving down, then it'll move up
+        if((sData[position] & 2) == 0 && ghostY[i] != 1) {
+          dx[number] = 0;
+          dy[number] = -1;
+          number++;
+        }
+        // if there's nothing towards the bottom and the ghost isn't moving up, then it'll move down
+        if((sData[position] & 8) == 0 && ghostY[i] != -1) {
+          dx[number] = 0;
+          dy[number] = 1;
+          number++;
+        }
+        if (number == 0) {
+          if((sData[position] & 15) == 15) {
+            ghostdX[i] = 0;
+            ghostdY[i] = 0;
+          } else {
+            ghostdX[i] = -ghostdX[i];
+            ghostdY[i] = -ghostdY[i];
+          }
+        } else {
+          number = (int) (Math.random() * number);
+          if (number > 3) {
+            number = 3;
+          }
+          ghostdX[i] = dx[number];
+          ghostdY[i] = dy[number];
+        }
+      }
+      ghostX[i] = ghostX[i] + (ghostdX[i] * ghostSpeed[i]);
+      ghostY[i] = ghostY[i] + (ghostdY[i] * ghostSpeeed[i]);
+      drawGhost(g2D, ghostX[i] + 1, ghostY[i] + 1);
+      // collision detection
+      if (pacmanX > (ghostX[i] - 12 && pacmanX < (ghostX[i] + 12) && pacmanY > (ghostY[i] - 12) && pacmanY < (ghostY[i] + 12) && inGame) {
+        dead = true;
+      }
+    }
+  }
   
 }
