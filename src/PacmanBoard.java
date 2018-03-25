@@ -367,5 +367,84 @@ public class PacmanBoard extends JPanel implements ActionListener {
       }
     }
   }
-  
+  // this is the main or general method that draws pacman
+  private void drawPac(Graphics2D g2D) {
+    if(viewdY == -1) {
+      drawUp(g2D);
+    } else if(viewdY == 1) {
+      drawDown(g2D);
+    } else if(viewdX == 1) {
+      drawRight(g2D);
+    } else {
+      drawLeft(g2D);
+    }
+  }
+  // draws pacman facing up and it moves up
+  private void drawUp(Graphics2D g2D) {
+    switch (pacmanPosition) {
+      case 1:
+        g2D.drawImage(pacmanUp, pacmanX + 1, pacmanY + 1, this);
+        break;
+      case 2:
+        g2D.drawImage(pacman2Up, pacmanX + 1, pacmanY + 1, this);
+        break;
+      case 3:
+        g2D.drawImage(pacman3Up, pacmanX + 1, pacmanY, this);
+        break;
+      default:
+        g2D.drawImage(pacman, pacmanX + 1, pacmanY, this);
+        break;
+    }
+  }
+  // draws pacman facing down
+  private void drawDown(Graphics2D g2D) {
+    switch (pacmanPosition) {
+      case 1:
+        g2D.drawImage(pacmanDown, pacmanX + 1, pacmanY + 1, this);
+        break;
+      case 2:
+        g2D.drawImage(pacman2Down, pacmanX + 1, pacmanY + 1, this);
+        break;
+      case 3:
+        g2D.drawImage(pacman3Down, pacmanX + 1, pacmanY, this);
+        break;
+      default:
+        g2D.drawImage(pacman, pacmanX + 1, pacmanY, this);
+        break;
+    }
+  }
+  // draws pacman facing right
+  private void drawRight(Graphics2D g2D) {
+    switch (pacmanPosition) {
+      case 1:
+        g2D.drawImage(pacmanRight, pacmanX + 1, pacmanY + 1, this);
+        break;
+      case 2:
+        g2D.drawImage(pacman2Right, pacmanX + 1, pacmanY + 1, this);
+        break;
+      case 3:
+        g2D.drawImage(pacman3Right, pacmanX + 1, pacmanY, this);
+        break;
+      default:
+        g2D.drawImage(pacman, pacmanX + 1, pacmanY, this);
+        break;
+    }
+  }
+  // draws pacman facing left
+  private void drawLeft(Graphics2D g2D) {
+    switch (pacmanPosition) {
+      case 1:
+        g2D.drawImage(pacmanLeft, pacmanX + 1, pacmanY + 1, this);
+        break;
+      case 2:
+        g2D.drawImage(pacman2Left, pacmanX + 1, pacmanY + 1, this);
+        break;
+      case 3:
+        g2D.drawImage(pacman3Left, pacmanX + 1, pacmanY, this);
+        break;
+      default:
+        g2D.drawImage(pacman, pacmanX + 1, pacmanY, this);
+        break;
+    }
+  }
 }
