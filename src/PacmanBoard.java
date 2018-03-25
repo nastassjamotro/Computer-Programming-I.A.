@@ -223,6 +223,17 @@ public class PacmanBoard extends JPanel implements ActionListener {
     g.setColor(new Color(255, 25, 42));
     s = "Score: " + score;
     g.drawString(s, SCREEN / 2 + 96, SCREEN + 16);
-    for (int i = 0; i  pacsLeft
+    for (int i = 0; i < pacsLeft; i++) {
+      g.drawImage(pacman2Left, i * 28 + 8, SCREEN + 1, this);
+    }
   }
+  
+  private void death() {
+    pacsLeft --;
+    if(pacsLeft == 0) {
+      inGame = false;
+    }
+    contLevel();
+  }
+  
 }
