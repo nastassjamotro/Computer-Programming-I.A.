@@ -173,21 +173,20 @@ public class PacmanBoard extends JPanel implements ActionListener {
   
   // loading all the images using ImageIcon
   private void loadImages() {
-    ghost = new ImageIcon("images/ghost.png").getImage();
-    pacman = new ImageIcon("images/ghost.png").getImage();
-    pacmanUp = new ImageIcon("images/ghost.png").getImage();
-    pacmanDown = new ImageIcon("images/ghost.png").getImage();
-    pacmanRight = new ImageIcon("images/ghost.png").getImage();
-    pacmanLeft = new ImageIcon("images/ghost.png").getImage();
-    pacman2Up = new ImageIcon("images/ghost.png").getImage();
-    pacman2Down = new ImageIcon("images/ghost.png").getImage();
-    pacman2Right = new ImageIcon("images/ghost.png").getImage();
-    pacman2Left = new ImageIcon("images/ghost.png").getImage();
-
-    pacman3Up = new ImageIcon("images/ghost.png").getImage();
-    pacman3Down = new ImageIcon("images/ghost.png").getImage();
-    pacman3Right = new ImageIcon("images/ghost.png").getImage();
-    pacman3Left = new ImageIcon("images/ghost.png").getImage();
+    ghost = new ImageIcon("ghost.gif").getImage();
+    pacman = new ImageIcon("pacman.gif").getImage();
+    pacmanUp = new ImageIcon("pacmanUp.gif").getImage();
+    pacmanDown = new ImageIcon("pacmanDown.gif").getImage();
+    pacmanRight = new ImageIcon("pacmanRight.gif").getImage();
+    pacmanLeft = new ImageIcon("pacmanLeft.gif").getImage();
+    pacman2Up = new ImageIcon("pacman2Up.gif").getImage();
+    pacman2Down = new ImageIcon("pacman2Down.gif").getImage();
+    pacman2Right = new ImageIcon("pacman2Right.gif").getImage();
+    pacman2Left = new ImageIcon("pacman2Left.gif").getImage();
+    pacman3Up = new ImageIcon("pacman3Up.gif").getImage();
+    pacman3Down = new ImageIcon("pacman3Down.gif").getImage();
+    pacman3Right = new ImageIcon("pacman3Right.gif").getImage();
+    pacman3Left = new ImageIcon("pacman3Left.gif").getImage();
   }
   
   private void play(Graphics2D g2D) {
@@ -483,5 +482,16 @@ public class PacmanBoard extends JPanel implements ActionListener {
     }
     pacmanX = pacmanX + PACMAN_SPEED * pacmandX;
     pacmanY = pacmanY + PACMAN_SPEED * pacmandY;
+  }
+  // animiation crap for pacman opening and closing his mouth
+  private void animation() {
+    pacmanCount --;
+    if(pacmanCount <= 0) {
+      pacmanCount = ANIMATIN_DELAY;
+      pacmanPosition = pacmanPosition + pacmanDirection;
+      if(pacmanPosition == (ANIMATION_COUNT - 1) || pacmanPosition == 0) {
+        pacmanDirection = -pacmanDirection;
+      }
+    }
   }
 }
