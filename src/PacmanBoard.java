@@ -169,20 +169,20 @@ public class PacmanBoard extends JPanel implements ActionListener {
   // loading all the images using ImageIcon
   // there's three different pacmans because you have three lives
   private void loadImages() {
-    ghost = new ImageIcon("ghost.gif").getImage();
-    pacman = new ImageIcon("pacman.gif").getImage();
-    pacmanUp = new ImageIcon("pacmanUp.gif").getImage();
-    pacmanDown = new ImageIcon("pacmanDown.gif").getImage();
-    pacmanRight = new ImageIcon("pacmanRight.gif").getImage();
-    pacmanLeft = new ImageIcon("pacmanLeft.gif").getImage();
-    pacman2Up = new ImageIcon("pacman2Up.gif").getImage();
-    pacman2Down = new ImageIcon("pacman2Down.gif").getImage();
-    pacman2Right = new ImageIcon("pacman2Right.gif").getImage();
-    pacman2Left = new ImageIcon("pacman2Left.gif").getImage();
-    pacman3Up = new ImageIcon("pacman3Up.gif").getImage();
-    pacman3Down = new ImageIcon("pacman3Down.gif").getImage();
-    pacman3Right = new ImageIcon("pacman3Right.gif").getImage();
-    pacman3Left = new ImageIcon("pacman3Left.gif").getImage();
+    ghost = new ImageIcon("images/ghost.png").getImage();
+    pacman = new ImageIcon("images/pacman.png").getImage();
+    pacmanUp = new ImageIcon("images/pacmanUp.png").getImage();
+    pacmanDown = new ImageIcon("images/pacmanDown.png").getImage();
+    pacmanRight = new ImageIcon("images/pacmanRight.png").getImage();
+    pacmanLeft = new ImageIcon("images/pacmanLeft.png").getImage();
+    pacman2Up = new ImageIcon("images/pacman2Up.png").getImage();
+    pacman2Down = new ImageIcon("images/pacman2Down.png").getImage();
+    pacman2Right = new ImageIcon("images/pacman2Right.png").getImage();
+    pacman2Left = new ImageIcon("images/pacman2Left.png").getImage();
+    pacman3Up = new ImageIcon("images/pacman3Up.png").getImage();
+    pacman3Down = new ImageIcon("images/pacman3Down.png").getImage();
+    pacman3Right = new ImageIcon("images/pacman3Right.png").getImage();
+    pacman3Left = new ImageIcon("images/pacman3Left.png").getImage();
   }
   
   private void play(Graphics2D g2D) {
@@ -463,7 +463,7 @@ public class PacmanBoard extends JPanel implements ActionListener {
       viewdX = pacmandX;
       viewdY = pacmandY;
     }
-    if(pacmandX % BLOCKS == 0 && pacmandY % BLOCKS == 0) { // again sees if pacman has moved a square
+    if(pacmanX % BLOCKS == 0 && pacmanY % BLOCKS == 0) { // again sees if pacman has moved a square
       position = pacmanX / BLOCKS + NUMBER_OF_BLOCKS * (int) (pacmanY / BLOCKS); // determines pacman's position
       i = sData[position];
       // this basically means that once pacman moves to a position with a point (dot on maze) then we remove that point and increase the score
@@ -539,10 +539,10 @@ public class PacmanBoard extends JPanel implements ActionListener {
           recdX = 0;
           recdY = 1;
         } else if(k == KeyEvent.VK_RIGHT) {
-          recdX = -1;
+          recdX = 1;
           recdY = 0;
         } else if(k == KeyEvent.VK_LEFT) {
-          recdX = 1;
+          recdX = -1;
           recdY = 0;
         } else if(k == KeyEvent.VK_PAUSE) {
           if(timer.isRunning()) {
