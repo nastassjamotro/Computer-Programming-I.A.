@@ -1,4 +1,4 @@
-// Nastassja Motro 
+// Nastassja Motro
 
 import java.awt.Dimension;
 import java.awt.Font;
@@ -58,6 +58,7 @@ public class PacmanBoard extends JPanel implements ActionListener {
   private int pacmanDirection = 1; //can only be facing or going one direction at a time
   
   // setting up speeds
+  private int[] ghostSpeed;
   private final int PACMAN_SPEED = 6;
   private final int speeds[] = {1, 2, 3, 4, 6, 8};
   private final int maxSpeed = 6;
@@ -97,8 +98,8 @@ public class PacmanBoard extends JPanel implements ActionListener {
   public void initBoard() {
     addKeyListener(new TAdapter());
     setBackground(Color.BLACK);
-    setFocusable(true); // lets component (jpanel) gain power of getting focused
-    setDoubleBuffered(true); // double buffer creates an image off screen then displays it all at once
+    setFocusable(true); //lets component (JPanel) gain power of getting focused
+    setDoubleBuffered(true); //double buffer creates an image off screen then displays it all at once
   }
   
   // initiates variables in the game
@@ -133,7 +134,7 @@ public class PacmanBoard extends JPanel implements ActionListener {
   
   // initializing each level
   public void initLevel() {
-    for(int element : level) {
+    for(short element : level) {
       for(int i = 0; i < NUMBER_OF_BLOCKS * NUMBER_OF_BLOCKS; i++) {
         sData[i] = element;
       }
@@ -194,9 +195,9 @@ public class PacmanBoard extends JPanel implements ActionListener {
       death();
     } else {
       check();
-      ghostMovement();
+      ghostMovement(g2D);
       pacMovement();
-      drawPac();
+      drawPac(g2D);
     }
   }
   
@@ -243,8 +244,9 @@ public class PacmanBoard extends JPanel implements ActionListener {
   */
   private void check() {
     boolean done = true;
-    while (short i < NUMBER_OF_BLOCKS * NUMBER_OF_BLOCKS && done) {
-      if(sData[i] & 48) != 0) {
+    short i = 0;
+    while (i < NUMBER_OF_BLOCKS * NUMBER_OF_BLOCKS && done) {
+      if((sData[i] & 48) != 0) {
         done = false;
       }
       i++;
@@ -293,7 +295,7 @@ public class PacmanBoard extends JPanel implements ActionListener {
           g2D.setColor(dots);
           g2D.fillRect(x + 11, y + 11, 2, 2);
         }
-        i++;
+        z++;
       }
     }
   }
@@ -316,7 +318,7 @@ public class PacmanBoard extends JPanel implements ActionListener {
     for (i = 0; i < GHOST_NUMBER; i++) {
       if (ghostX[i] % BLOCKS == 0 && ghostY[i] % BLOCKS == 0) { // this just checks if the ghost has moved yet, and if they have it'll then decide what to do
         position = ghostX[i] / BLOCKS + NUMBER_OF_BLOCKS * (int) (ghostY[i] / BLOCKS); // this figures out the location of the ghost
-        count = 0;
+        number = 0;
         // if there's nothing on the left and the ghost isn't moving right, then it'll move left
         if((sData[position] & 1) == 0 && ghostX[i] != 1) {
           dx[number] = -1;
@@ -361,10 +363,10 @@ public class PacmanBoard extends JPanel implements ActionListener {
         }
       }
       ghostX[i] = ghostX[i] + (ghostdX[i] * ghostSpeed[i]);
-      ghostY[i] = ghostY[i] + (ghostdY[i] * ghostSpeeed[i]);
+      ghostY[i] = ghostY[i] + (ghostdY[i] * ghostSpeed[i]);
       drawGhost(g2D, ghostX[i] + 1, ghostY[i] + 1);
       // collision detection for pacman and the ghosts
-      if (pacmanX > (ghostX[i] - 12 && pacmanX < (ghostX[i] + 12) && pacmanY > (ghostY[i] - 12) && pacmanY < (ghostY[i] + 12) && inGame) {
+      if (pacmanX > (ghostX[i] - 12) && pacmanX < (ghostX[i] + 12) && pacmanY > (ghostY[i] - 12) && pacmanY < (ghostY[i] + 12) && inGame) {
         dead = true;
       }
     }
@@ -476,15 +478,14 @@ public class PacmanBoard extends JPanel implements ActionListener {
       }
       if(recdX != 0 || recdY != 0) {
         if(!((recdX == -1 && recdY == 0 && (i & 1) != 0) || (recdX == 1 && recdY == 0 && (i & 4) != 0)
-             || (recdX == 0 && recdY == -1 && (i & 2) != 0) || (recdX == 0 && recdY == 1 && (i & 8) != 0) {
+           || (recdX == 0 && recdY == -1 && (i & 2) != 0) || (recdX == 0 && recdY == 1 && (i & 8) != 0))) {
            pacmandX = recdX;
            pacmandY = recdY;
            viewdX = pacmandX;
            viewdY = pacmandY;
          }
       }
-      if((pacmandX == -1 && pacmandY == 0 && (i & 1) != 0) || (pacmandX == 1 && pacmandY == 0) && (i & 4) != 0)
-             || (pacmandX == 0 && pacmandY == -1 && (i & 2) != 0) || (pacmandX == 0 && pacmandY == 1 && (i & 8) != 0) {
+      if((pacmandX == -1 && pacmandY == 0 && (i & 1) != 0) || (pacmandX == 1 && pacmandY == 0 && (i & 4) != 0) || (pacmandX == 0 && pacmandY == -1 && (i & 2) != 0) || (pacmandX == 0 && pacmandY == 1 && (i & 8) != 0)) {
          pacmandX = 0;
          pacmandY = 0;
       }
@@ -498,7 +499,7 @@ public class PacmanBoard extends JPanel implements ActionListener {
   private void animation() {
     pacmanCount --;
     if(pacmanCount <= 0) {
-      pacmanCount = ANIMATIN_DELAY;
+      pacmanCount = ANIMATION_DELAY;
       pacmanPosition = pacmanPosition + pacmanDirection;
       if(pacmanPosition == (ANIMATION_COUNT - 1) || pacmanPosition == 0) {
         pacmanDirection = -pacmanDirection;
@@ -545,9 +546,9 @@ public class PacmanBoard extends JPanel implements ActionListener {
         } else if(k == KeyEvent.VK_RIGHT) {
           recdX = -1;
           recdY = 0;
-        } else if(k == KeyEvent.VK_LEFT
+        } else if(k == KeyEvent.VK_LEFT) {
           recdX = 1;
-          recdY = 0
+          recdY = 0;
         } else if(k == KeyEvent.VK_PAUSE) {
           if(timer.isRunning()) {
             timer.stop();
