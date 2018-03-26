@@ -104,7 +104,7 @@ public class PacmanBoard extends JPanel implements ActionListener {
   // initiates variables in the game
   public void initVar() {
     dim = new Dimension(400, 400);
-    maze = new Color(13, 255, 71);
+    mColor = new Color(13, 255, 71);
     ghostX = new int[GHOST_MAX];
     ghostY = new int[GHOST_MAX];
     ghostdX = new int[GHOST_MAX];
@@ -117,8 +117,8 @@ public class PacmanBoard extends JPanel implements ActionListener {
   }
   
   @Override
-  public void addNotification() {
-    super.addNotification();
+  public void addNotify() {
+    super.addNotify();
     initGame();
   }
   
