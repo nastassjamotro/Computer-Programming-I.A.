@@ -1,5 +1,3 @@
-// Nastassja Motro
-
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Color;
@@ -134,20 +132,18 @@ public class PacmanBoard extends JPanel implements ActionListener {
   
   // initializing each level
   public void initLevel() {
-    for(short element : level) {
-      for(int i = 0; i < NUMBER_OF_BLOCKS * NUMBER_OF_BLOCKS; i++) {
-        sData[i] = element;
+    for(int i = 0; i < NUMBER_OF_BLOCKS * NUMBER_OF_BLOCKS; i++) {
+        sData[i] = level[i];
       }
-    }
     contLevel();
   }
   
   // continuing the level after initializing
   public void contLevel() {
+	short i;
     int dx = 1;
     int random;
-    for(int element : ghostSpeed) {
-      for(short i = 0; i < GHOST_NUMBER; i++) {
+    for(i = 0; i < GHOST_NUMBER; i++) {
         ghostX[i] = BLOCKS * 4;
         ghostY[i] = BLOCKS * 4;
         ghostdX[i] = dx;
@@ -157,8 +153,7 @@ public class PacmanBoard extends JPanel implements ActionListener {
         if(random > currentSpeed) {
           random = currentSpeed;
         }
-        element = speeds[random];
-      }
+        ghostSpeed[i] = speeds[random];
     }
     pacmanX = BLOCKS * 7;
     pacmanY = BLOCKS * 11;
