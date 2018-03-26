@@ -56,7 +56,7 @@ public class PacmanBoard extends JPanel implements ActionListener {
   private int pacmanDirection = 1; //can only be facing or going one direction at a time
   
   // setting up speeds
-  private short[] ghostSpeed;
+  private short[] ghostSpeed = new short[GHOST_NUMBER];
   private final int PACMAN_SPEED = 6;
   private final int speeds[] = {1, 2, 3, 4, 6, 8};
   private final int maxSpeed = 6;
@@ -153,7 +153,7 @@ public class PacmanBoard extends JPanel implements ActionListener {
         if(random > currentSpeed) {
           random = currentSpeed;
         }
-        ghostSpeed[i] = speeds[random];
+        ghostSpeed[i] = (short) speeds[random];
     }
     pacmanX = BLOCKS * 7;
     pacmanY = BLOCKS * 11;
