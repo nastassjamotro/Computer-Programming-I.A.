@@ -39,7 +39,7 @@ public class PacmanBoard extends JPanel implements ActionListener {
   private int score;
   
   // setting position and movement for the ghosts and pacman
-  private int[] ghostX, ghostY, ghostdX, ghostdY;
+  private int[] ghostX, ghostY, ghostdX, ghostdY, ghostSpeed;
   private int pacmanX, pacmanY, pacmandX, pacmandY;
   private int[] dx, dy;
   private int recdX, recdY;
@@ -56,7 +56,6 @@ public class PacmanBoard extends JPanel implements ActionListener {
   private int pacmanDirection = 1; //can only be facing or going one direction at a time
   
   // setting up speeds
-  private int[] ghostSpeed;
   private final int PACMAN_SPEED = 6;
   private final int speeds[] = {1, 2, 3, 4, 6, 8};
   private final int maxSpeed = 6;
