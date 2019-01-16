@@ -34,7 +34,7 @@ public class PacmanBoard extends JPanel implements ActionListener {
   private Image pacman3Up, pacman3Down, pacman3Right, pacman3Left;
   
   private boolean dead = false; // always false until the player dies
-  private boolean inGame = false; // always false until player initiates the game in the introduciton screen
+  private boolean inGame = false; // always false until player initiates the game in the introduction screen
   private int pacsLeft; // more than one life
   private int score;
   
